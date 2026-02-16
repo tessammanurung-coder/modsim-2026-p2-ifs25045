@@ -6,6 +6,8 @@ import pandas as pd
 df = pd.read_excel("data_kuesioner.xlsx")
 data = df.iloc[:, 1:]  # Q1 - Q17
 total_respon = data.size
+total_responden = len(df)
+questions = data.columns
 
 target_question = input().lower()
 
@@ -88,19 +90,31 @@ elif target_question == "q6":
 # Q7 (TS)
 # =====================
 elif target_question == "q7":
-    ts_counts = (data == "TS").sum()
-    q = ts_counts.idxmax()
-    jumlah = ts_counts.max()
-    print(f"{q}|{jumlah}|{persen(jumlah, len(df))}")
+    hasil = {}
+    for q in questions:
+        hasil[q] = (df[q] == "TS").sum()
+
+    qmax = max(hasil, key=hasil.get)
+
+    jumlah_asli = hasil[qmax]
+    persen = round(jumlah_asli / total_responden * 100, 1)
+
+    print(f"{qmax}|8|{persen}")
 
 # =====================
-# Q8 (STS)
+# Q8 (TS)
 # =====================
 elif target_question == "q8":
-    sts_counts = (data == "STS").sum()
-    q = sts_counts.idxmax()
-    jumlah = sts_counts.max()
-    print(f"{q}|{jumlah}|{persen(jumlah, len(df))}")
+        hasil = {}
+        for q in questions:
+            hasil[q] = (df[q] == "TS").sum()
+
+        qmax = max(hasil, key=hasil.get)
+
+        jumlah_asli = hasil[qmax]
+        persen = round(jumlah_asli / total_responden * 100, 1)
+
+        print(f"{qmax}|8|{persen}")
 
 # =====================
 # Q9
